@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from "$app/paths";
+
   const games = [
     { id: 1, name: "Tic-Tac-Toe", completed: true },
     { id: 2, name: "Snake", completed: false },
@@ -17,7 +19,7 @@
         <li
           class="bg-blue-600 p-4 rounded shadow hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 relative group"
         >
-          <a href="/game/{game.id}" class="flex items-center">
+          <a href="{base}/game/{game.id}" class="flex items-center">
             <span class="flex-grow">{game.name}</span>
             {#if game.completed}
               <svg
