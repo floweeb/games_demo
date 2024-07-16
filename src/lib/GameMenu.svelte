@@ -2,7 +2,7 @@
   import { base } from "$app/paths";
 
   const games = [
-    { id: 1, name: "Tic-Tac-Toe", completed: false },
+    { id: 1, name: "Tic-Tac-Toe", completed: true },
     { id: 2, name: "Snake", completed: false },
     { id: 3, name: "Flappy bird", completed: false },
   ];
