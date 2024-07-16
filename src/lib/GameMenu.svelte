@@ -2,10 +2,20 @@
   import { base } from "$app/paths";
 
   const games = [
-    { id: 1, name: "Tic-Tac-Toe", completed: true },
+    { id: 1, name: "Tic-Tac-Toe", completed: false },
     { id: 2, name: "Snake", completed: false },
     { id: 3, name: "Flappy bird", completed: false },
   ];
+
+  function handleClick(event: MouseEvent, completed: boolean) {
+    if (!completed) {
+      event.preventDefault();
+      const target = event.currentTarget as HTMLElement;
+      const emoji = target.querySelector(".game-emoji") as HTMLElement;
+      emoji.classList.add("animate-wiggle");
+      setTimeout(() => emoji.classList.remove("animate-wiggle"), 500);
+    }
+  }
 </script>
 
 <div class="min-h-screen bg-gray-800 text-white flex flex-col items-center">
@@ -19,9 +29,13 @@
         <li
           class="bg-blue-600 p-4 rounded shadow hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 relative group"
         >
-          <a href="{base}/game/{game.id}" class="flex items-center">
+          <a
+            href={game.completed ? `${base}/game/${game.id}` : "#"}
+            class="flex items-center"
+            on:click={(e) => handleClick(e, game.completed)}
+          >
             <span class="flex-grow">{game.name}</span>
-            <span class="text-2xl ml-2" aria-hidden="true">
+            <span class="game-emoji text-2xl ml-2" aria-hidden="true">
               {game.completed ? "🎮" : "🚧"}
             </span>
             {#if !game.completed}
@@ -38,3 +52,21 @@
     </ul>
   </div>
 </div>
+
+<style>
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-15deg);
+    }
+    75% {
+      transform: rotate(15deg);
+    }
+  }
+  :global(.animate-wiggle) {
+    animation: wiggle 0.5s ease-in-out;
+  }
+</style>
