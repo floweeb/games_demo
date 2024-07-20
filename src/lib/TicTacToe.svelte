@@ -51,7 +51,7 @@
   class="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white"
 >
   <h1 class="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
-
+  <p class="mb-2">Requires 2 to play.</p>
   <div class="grid grid-cols-3 gap-2 mb-8">
     {#each board as cell, index}
       <button
@@ -59,7 +59,7 @@
         on:click={() => handleClick(index)}
         disabled={cell !== null || winner !== null}
       >
-        {cell}
+        {cell ? cell : ""}
       </button>
     {/each}
   </div>
