@@ -51,7 +51,7 @@
   class="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white"
 >
   <h1 class="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
-
+  <p class="mb-2">Requires 2 to play.</p>
   <div class="grid grid-cols-3 gap-2 mb-8">
     {#each board as cell, index}
       <button
@@ -59,20 +59,21 @@
         on:click={() => handleClick(index)}
         disabled={cell !== null || winner !== null}
       >
-        {cell}
+        {cell ? cell : ""}
       </button>
     {/each}
   </div>
+  <button
+    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded my-2"
+    on:click={resetGame}
+  >
+    Play Again
+  </button>
+
   {#if winner}
-    <p class="text-2xl mb-4">
+    <p class="text-2xl">
       {winner === "Draw" ? "It's a draw!" : `Player ${winner} wins!`}
     </p>
-    <button
-      class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-      on:click={resetGame}
-    >
-      Play Again
-    </button>
   {:else}
     <p class="text-2xl">Current player: {currentPlayer}</p>
   {/if}
