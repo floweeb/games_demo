@@ -1,0 +1,81 @@
+<script lang="ts">
+  import { base } from "$app/paths";
+
+  let board = Array(9).fill(null);
+  let currentPlayer: "X" | "O" = "X";
+  let winner: string | null = null;
+
+  function handleClick(index: number) {
+    if (board[index] || winner) return;
+
+    board[index] = currentPlayer;
+    board = board; // trigger reactivity
+
+    if (checkWinner()) {
+      winner = currentPlayer;
+    } else if (board.every((cell) => cell !== null)) {
+      winner = "Draw";
+    } else {
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+    }
+  }
+
+  function checkWinner(): boolean {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // columns
+      [0, 4, 8],
+      [2, 4, 6], // diagonals
+    ];
+
+    return lines.some(
+      (line) =>
+        board[line[0]] &&
+        board[line[0]] === board[line[1]] &&
+        board[line[0]] === board[line[2]]
+    );
+  }
+
+  function resetGame() {
+    board = Array(9).fill(null);
+    currentPlayer = "X";
+    winner = null;
+  }
+</script>
+
+<div
+  class="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white"
+>
+  <h1 class="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
+
+  <div class="grid grid-cols-3 gap-2 mb-8">
+    {#each board as cell, index}
+      <button
+        class="w-20 h-20 bg-blue-500 hover:bg-blue-600 text-4xl font-bold flex items-center justify-center"
+        on:click={() => handleClick(index)}
+        disabled={cell !== null || winner !== null}
+      >
+        {cell}
+      </button>
+    {/each}
+  </div>
+  {#if winner}
+    <p class="text-2xl mb-4">
+      {winner === "Draw" ? "It's a draw!" : `Player ${winner} wins!`}
+    </p>
+    <button
+      class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+      on:click={resetGame}
+    >
+      Play Again
+    </button>
+  {:else}
+    <p class="text-2xl">Current player: {currentPlayer}</p>
+  {/if}
+
+  <a href="{base}/" class="mt-8 text-blue-400 hover:underline">Back to Menu</a>
+</div>
