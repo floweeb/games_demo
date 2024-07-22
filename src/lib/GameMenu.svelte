@@ -13,7 +13,7 @@
   }
 </script>
 
-<div class="min-h-screen bg-gray-800 text-white flex flex-col items-center">
+<div class="flex flex-col items-center">
   <div class="container mx-auto p-8 flex-grow flex flex-col items-center">
     <h1 class="text-5xl font-bold mb-4 text-center text-yellow-400">
       Floweeb's Arcade

@@ -47,15 +47,13 @@
   }
 </script>
 
-<div
-  class="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white"
->
+<div class="flex flex-col items-center justify-center min-h-screen">
   <h1 class="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
   <p class="mb-2">Requires 2 to play.</p>
   <div class="grid grid-cols-3 gap-2 mb-8">
     {#each board as cell, index}
       <button
-        class="w-20 h-20 bg-blue-500 hover:bg-blue-600 text-4xl font-bold flex items-center justify-center"
+        class="w-20 h-20 bg-game-primary hover:bg-game-primary-hover text-4xl font-bold flex items-center justify-center"
         on:click={() => handleClick(index)}
         disabled={cell !== null || winner !== null}
       >
@@ -64,7 +62,7 @@
     {/each}
   </div>
   <button
-    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded my-2"
+    class="bg-game-secondary hover:bg-game-secondary-hover text-white font-bold py-2 px-4 rounded my-2"
     on:click={resetGame}
   >
     Play Again
@@ -78,5 +76,5 @@
     <p class="text-2xl">Current player: {currentPlayer}</p>
   {/if}
 
-  <a href="{base}/" class="mt-8 text-blue-400 hover:underline">Back to Menu</a>
+  <a href="{base}/" class="mt-8 text-game-link hover:underline">Back to Menu</a>
 </div>
