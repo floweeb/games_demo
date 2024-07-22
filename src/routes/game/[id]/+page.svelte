@@ -6,7 +6,7 @@
   const gameId = $page.params.id;
 </script>
 
-<div class="container mx-auto bg-gray-800">
+<div class="container mx-auto">
   {#if gameId === "1"}
     <TicTacToe />
   {:else}
