@@ -1,17 +1,23 @@
 <script lang="ts">
   import { base } from "$app/paths";
+  import wordHints, { type WordHint } from "./HangMan";
 
-  let words = [
-    "CAT",
-    "SVELTE",
-    "JAVASCRIPT",
-    "TYPESCRIPT",
-    "HANGMAN",
-    "ARCADE",
-  ];
-  let word = words[Math.floor(Math.random() * words.length)];
+  let currentWordHint: WordHint;
+  let word: string;
+  let hint: string;
   let guessedLetters: string[] = [];
-  let remainingGuesses = 6;
+  let remainingGuesses: number;
+
+  function initializeGame() {
+    currentWordHint = wordHints[Math.floor(Math.random() * wordHints.length)];
+    word = currentWordHint.word;
+    hint = currentWordHint.hint;
+    guessedLetters = [];
+    remainingGuesses = 6;
+    console.log("Game initialized with word:", word);
+  }
+
+  initializeGame();
 
   $: maskedWord = word
     .split("")
@@ -19,22 +25,28 @@
     .join(" ");
 
   $: gameOver = remainingGuesses <= 0;
-  $: gameWon = !maskedWord.includes("_");
+  $: gameWon = word && maskedWord.replace(/\s/g, "") === word;
 
   function guessLetter(letter: string) {
     if (guessedLetters.includes(letter)) return;
 
     guessedLetters = [...guessedLetters, letter];
+    console.log("Guessed letter:", letter, "Current guesses:", guessedLetters);
 
     if (!word.includes(letter)) {
       remainingGuesses--;
+      console.log("Incorrect guess. Remaining guesses:", remainingGuesses);
+    } else {
+      console.log("Correct guess!");
     }
+
+    // Force Svelte to re-evaluate reactive statements
+    guessedLetters = guessedLetters;
+    word = word;
   }
 
   function resetGame() {
-    word = words[Math.floor(Math.random() * words.length)];
-    guessedLetters = [];
-    remainingGuesses = 6;
+    initializeGame();
   }
 </script>
 
@@ -44,6 +56,7 @@
   <h1 class="text-4xl font-bold mb-8">Hangman</h1>
 
   <div class="text-6xl mb-8">{maskedWord}</div>
+  <div class="mb-4">Hint: {hint}</div>
 
   <div class="mb-4">Remaining guesses: {remainingGuesses}</div>
 
