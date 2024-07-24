@@ -10,11 +10,10 @@
 
   function initializeGame() {
     currentWordHint = wordHints[Math.floor(Math.random() * wordHints.length)];
-    word = currentWordHint.word;
+    word = currentWordHint.word.toUpperCase();
     hint = currentWordHint.hint;
     guessedLetters = [];
     remainingGuesses = 6;
-    console.log("Game initialized with word:", word);
   }
 
   initializeGame();
@@ -31,13 +30,10 @@
     if (guessedLetters.includes(letter)) return;
 
     guessedLetters = [...guessedLetters, letter];
-    console.log("Guessed letter:", letter, "Current guesses:", guessedLetters);
-    // console.log("tree".includes("t"));
-    if (!word.includes(letter.toLowerCase())) {
+
+    if (!word.includes(letter)) {
       remainingGuesses--;
-      console.log("Incorrect guess. Remaining guesses:", remainingGuesses);
     } else {
-      console.log("Correct guess!");
     }
 
     // Force Svelte to re-evaluate reactive statements
