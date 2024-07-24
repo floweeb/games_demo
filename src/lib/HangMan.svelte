@@ -32,8 +32,8 @@
 
     guessedLetters = [...guessedLetters, letter];
     console.log("Guessed letter:", letter, "Current guesses:", guessedLetters);
-
-    if (!word.includes(letter)) {
+    // console.log("tree".includes("t"));
+    if (!word.includes(letter.toLowerCase())) {
       remainingGuesses--;
       console.log("Incorrect guess. Remaining guesses:", remainingGuesses);
     } else {
