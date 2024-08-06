@@ -1,4 +1,7 @@
 <script lang="ts">
+  let generation: number = 0,
+    interval_time = 500;
+  $: population = countMarkedCells(grid);
   let grid: boolean[][] = [];
   const gridSize = 20;
   let isRunning = false;
@@ -14,11 +17,23 @@
     grid[row][col] = !grid[row][col];
     grid = [...grid];
   }
+  function countMarkedCells(grid: boolean[][]): number {
+    let count = 0;
 
+    for (let row of grid) {
+      for (let cell of row) {
+        if (cell) {
+          count++;
+        }
+      }
+    }
+
+    return count;
+  }
   function startGame() {
     if (!isRunning) {
       isRunning = true;
-      intervalId = setInterval(updateGrid, 200);
+      intervalId = setInterval(updateGrid, interval_time);
     }
   }
 
@@ -32,6 +47,7 @@
   }
 
   function updateGrid() {
+    generation += 1;
     const newGrid = grid.map((row) => [...row]);
 
     for (let i = 0; i < gridSize; i++) {
@@ -82,8 +98,11 @@
   initializeGrid();
 </script>
 
-<!-- ... (rest of the component remains the same) ... -->
 <div class="flex flex-col items-center justify-center min-h-screen">
+  <div class="absolute top-5 right-5 p-4 shadow-lg rounded-lg">
+    <p>Population: {population}</p>
+    <p>Generation: {generation}</p>
+  </div>
   <h1 class="text-4xl font-bold mb-8">Game of Life</h1>
   <p class="mb-2">Click cells to seed, then start the game.</p>
 
