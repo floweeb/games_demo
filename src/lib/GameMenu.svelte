@@ -20,12 +20,12 @@
     </h1>
     <h2 class="text-2xl font-semibold mb-6 text-center">Menu</h2>
     <ul class="w-4/5 md:w-3/5 lg:w-1/2 space-y-4">
-      {#each games as game}
+      {#each games as game, id}
         <li
           class="bg-blue-600 p-4 rounded shadow hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 relative group"
         >
           <a
-            href={game.completed ? `${base}/game/${game.id}` : "#"}
+            href={game.completed ? `${base}/game/${id + 1}` : "#"}
             class="flex items-center"
             on:click={(e) => handleClick(e, game.completed)}
           >
